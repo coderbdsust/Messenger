@@ -12,6 +12,7 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.EOFException;
 import java.io.IOException;
+import java.io.Serializable;
 import java.net.InetAddress;
 import java.net.Socket;
 import java.util.Scanner;
@@ -21,7 +22,7 @@ import javax.swing.JTextField;
  *
  * @author Biswajit
  */
-public class Client extends Thread {
+public class Client extends Thread implements Serializable{
     
     Socket socket;
     DataInputStream dataInput;

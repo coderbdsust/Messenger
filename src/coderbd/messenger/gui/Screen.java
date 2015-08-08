@@ -173,10 +173,13 @@ public class Screen extends javax.swing.JFrame {
         ipAdressLabel = new javax.swing.JLabel();
         createButton = new javax.swing.JButton();
         chatPanel = new javax.swing.JPanel();
-        chatViewScrollPane = new javax.swing.JScrollPane();
-        chatBox = new javax.swing.JTextArea();
+        messageContainerPanel = new javax.swing.JPanel();
+        messagePanel = new javax.swing.JPanel();
         chatTextLabel = new javax.swing.JLabel();
         chatField = new javax.swing.JTextField();
+        messageViewPanel = new javax.swing.JPanel();
+        chatViewScrollPane = new javax.swing.JScrollPane();
+        chatBox = new javax.swing.JTextArea();
         messengerMenuBar = new javax.swing.JMenuBar();
         messengerMenu = new javax.swing.JMenu();
         exitMenuItem = new javax.swing.JMenuItem();
@@ -187,16 +190,17 @@ public class Screen extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMaximumSize(new java.awt.Dimension(400, 600));
+        setPreferredSize(new java.awt.Dimension(400, 550));
 
-        mainPanel.setBackground(new java.awt.Color(204, 255, 204));
+        mainPanel.setBackground(new java.awt.Color(255, 102, 102));
         mainPanel.setMaximumSize(new java.awt.Dimension(388, 600));
-        mainPanel.setMinimumSize(new java.awt.Dimension(388, 600));
-        mainPanel.setPreferredSize(new java.awt.Dimension(388, 600));
+        mainPanel.setMinimumSize(new java.awt.Dimension(0, 0));
+        mainPanel.setPreferredSize(new java.awt.Dimension(388, 550));
         mainPanel.setLayout(new java.awt.CardLayout());
 
-        accountInfoPanel.setBackground(new java.awt.Color(215, 241, 255));
-        accountInfoPanel.setMaximumSize(new java.awt.Dimension(388, 600));
-        accountInfoPanel.setPreferredSize(new java.awt.Dimension(388, 600));
+        accountInfoPanel.setBackground(new java.awt.Color(255, 255, 255));
+        accountInfoPanel.setMaximumSize(new java.awt.Dimension(388, 500));
+        accountInfoPanel.setPreferredSize(new java.awt.Dimension(388, 500));
 
         comboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "SERVER", "CLIENT" }));
         comboBox.addActionListener(new java.awt.event.ActionListener() {
@@ -206,11 +210,11 @@ public class Screen extends javax.swing.JFrame {
         });
 
         choicePanel.setMaximumSize(new java.awt.Dimension(388, 600));
-        choicePanel.setPreferredSize(new java.awt.Dimension(388, 370));
-        choicePanel.setLayout(new javax.swing.BoxLayout(choicePanel, javax.swing.BoxLayout.LINE_AXIS));
+        choicePanel.setPreferredSize(new java.awt.Dimension(300, 370));
+        choicePanel.setLayout(new java.awt.CardLayout());
 
-        serverInfoPanel.setBackground(new java.awt.Color(204, 237, 255));
-        serverInfoPanel.setPreferredSize(new java.awt.Dimension(370, 370));
+        serverInfoPanel.setBackground(new java.awt.Color(255, 255, 255));
+        serverInfoPanel.setPreferredSize(new java.awt.Dimension(300, 370));
 
         serverPortField.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
@@ -221,8 +225,10 @@ public class Screen extends javax.swing.JFrame {
             }
         });
 
+        usernameServerLabel.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         usernameServerLabel.setText("Your Name");
 
+        portserverLabel.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         portserverLabel.setText("Port-ID");
 
         javax.swing.GroupLayout serverInfoPanelLayout = new javax.swing.GroupLayout(serverInfoPanel);
@@ -230,15 +236,15 @@ public class Screen extends javax.swing.JFrame {
         serverInfoPanelLayout.setHorizontalGroup(
             serverInfoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(serverInfoPanelLayout.createSequentialGroup()
-                .addGap(38, 38, 38)
-                .addGroup(serverInfoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(usernameServerLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(portserverLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addContainerGap()
+                .addGroup(serverInfoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(portserverLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(usernameServerLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 80, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 88, Short.MAX_VALUE)
                 .addGroup(serverInfoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(serverPortField)
                     .addComponent(serverUsernameField, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(42, 42, 42))
+                .addContainerGap())
         );
         serverInfoPanelLayout.setVerticalGroup(
             serverInfoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -254,10 +260,12 @@ public class Screen extends javax.swing.JFrame {
                 .addContainerGap(238, Short.MAX_VALUE))
         );
 
-        choicePanel.add(serverInfoPanel);
+        choicePanel.add(serverInfoPanel, "card2");
 
-        clientInfoPanel.setBackground(new java.awt.Color(204, 236, 255));
+        clientInfoPanel.setBackground(new java.awt.Color(255, 255, 255));
+        clientInfoPanel.setPreferredSize(new java.awt.Dimension(300, 370));
 
+        usernameCleintLabel.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         usernameCleintLabel.setText("Your Name");
 
         clientPortField.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -275,8 +283,10 @@ public class Screen extends javax.swing.JFrame {
             }
         });
 
+        portClientLabel.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         portClientLabel.setText("Port-ID");
 
+        ipAdressLabel.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         ipAdressLabel.setText("IP Address");
 
         javax.swing.GroupLayout clientInfoPanelLayout = new javax.swing.GroupLayout(clientInfoPanel);
@@ -284,17 +294,17 @@ public class Screen extends javax.swing.JFrame {
         clientInfoPanelLayout.setHorizontalGroup(
             clientInfoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(clientInfoPanelLayout.createSequentialGroup()
-                .addGap(39, 39, 39)
+                .addContainerGap()
                 .addGroup(clientInfoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(portClientLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(usernameCleintLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(ipAdressLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(10, 10, 10)
+                    .addComponent(ipAdressLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 133, Short.MAX_VALUE)
+                    .addComponent(portClientLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(clientInfoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(clientIpAddressField)
+                    .addComponent(clientUsernameField, javax.swing.GroupLayout.DEFAULT_SIZE, 205, Short.MAX_VALUE)
                     .addComponent(clientPortField)
-                    .addComponent(clientUsernameField, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(41, 41, 41))
+                    .addComponent(clientIpAddressField))
+                .addContainerGap())
         );
         clientInfoPanelLayout.setVerticalGroup(
             clientInfoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -314,8 +324,9 @@ public class Screen extends javax.swing.JFrame {
                 .addContainerGap(202, Short.MAX_VALUE))
         );
 
-        choicePanel.add(clientInfoPanel);
+        choicePanel.add(clientInfoPanel, "card3");
 
+        createButton.setBackground(new java.awt.Color(255, 255, 255));
         createButton.setText("Create");
         createButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -328,17 +339,17 @@ public class Screen extends javax.swing.JFrame {
         accountInfoPanelLayout.setHorizontalGroup(
             accountInfoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(accountInfoPanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(accountInfoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(choicePanel, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                    .addGroup(accountInfoPanelLayout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(createButton, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap())
-            .addGroup(accountInfoPanelLayout.createSequentialGroup()
                 .addGap(152, 152, 152)
                 .addComponent(comboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(149, Short.MAX_VALUE))
+            .addGroup(accountInfoPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(accountInfoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(choicePanel, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, accountInfoPanelLayout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(createButton, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap())
         );
         accountInfoPanelLayout.setVerticalGroup(
             accountInfoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -347,48 +358,62 @@ public class Screen extends javax.swing.JFrame {
                 .addComponent(comboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(choicePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(55, 55, 55)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(createButton)
-                .addContainerGap(107, Short.MAX_VALUE))
+                .addContainerGap(22, Short.MAX_VALUE))
         );
 
         mainPanel.add(accountInfoPanel, "card2");
 
         chatPanel.setBackground(new java.awt.Color(204, 237, 255));
         chatPanel.setMaximumSize(new java.awt.Dimension(388, 600));
-        chatPanel.setPreferredSize(new java.awt.Dimension(388, 600));
+        chatPanel.setPreferredSize(new java.awt.Dimension(388, 500));
+        chatPanel.setLayout(new java.awt.CardLayout());
+
+        messageContainerPanel.setBackground(new java.awt.Color(255, 102, 102));
+        messageContainerPanel.setPreferredSize(new java.awt.Dimension(400, 500));
+        messageContainerPanel.setLayout(new java.awt.BorderLayout());
+
+        chatTextLabel.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        chatTextLabel.setText("Message");
+
+        javax.swing.GroupLayout messagePanelLayout = new javax.swing.GroupLayout(messagePanel);
+        messagePanel.setLayout(messagePanelLayout);
+        messagePanelLayout.setHorizontalGroup(
+            messagePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(messagePanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(messagePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(messagePanelLayout.createSequentialGroup()
+                        .addComponent(chatTextLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 280, Short.MAX_VALUE))
+                    .addComponent(chatField))
+                .addContainerGap())
+        );
+        messagePanelLayout.setVerticalGroup(
+            messagePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(messagePanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(chatTextLabel)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(chatField, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(39, Short.MAX_VALUE))
+        );
+
+        messageContainerPanel.add(messagePanel, java.awt.BorderLayout.PAGE_END);
+
+        messageViewPanel.setBackground(new java.awt.Color(204, 255, 204));
+        messageViewPanel.setLayout(new java.awt.CardLayout());
 
         chatBox.setColumns(20);
         chatBox.setRows(5);
         chatViewScrollPane.setViewportView(chatBox);
 
-        chatTextLabel.setText(" Chat Text");
+        messageViewPanel.add(chatViewScrollPane, "card2");
 
-        javax.swing.GroupLayout chatPanelLayout = new javax.swing.GroupLayout(chatPanel);
-        chatPanel.setLayout(chatPanelLayout);
-        chatPanelLayout.setHorizontalGroup(
-            chatPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(chatPanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(chatPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(chatViewScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 380, Short.MAX_VALUE)
-                    .addGroup(chatPanelLayout.createSequentialGroup()
-                        .addComponent(chatTextLabel)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(chatField))
-                .addContainerGap())
-        );
-        chatPanelLayout.setVerticalGroup(
-            chatPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(chatPanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(chatViewScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 500, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(chatTextLabel)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(chatField, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(45, Short.MAX_VALUE))
-        );
+        messageContainerPanel.add(messageViewPanel, java.awt.BorderLayout.CENTER);
+
+        chatPanel.add(messageContainerPanel, "card2");
 
         mainPanel.add(chatPanel, "card3");
 
@@ -445,7 +470,7 @@ public class Screen extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(mainPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 629, Short.MAX_VALUE)
+            .addComponent(mainPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 600, Short.MAX_VALUE)
         );
 
         pack();
@@ -476,25 +501,11 @@ public class Screen extends javax.swing.JFrame {
         System.exit(0);
     }//GEN-LAST:event_exitMenuItemActionPerformed
 
-    private void serverPortFieldKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_serverPortFieldKeyPressed
-        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            accountLogin();
-        }
-    }//GEN-LAST:event_serverPortFieldKeyPressed
-
     private void clientPortFieldKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_clientPortFieldKeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             accountLogin();
         }
     }//GEN-LAST:event_clientPortFieldKeyPressed
-
-    private void serverPortFieldKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_serverPortFieldKeyTyped
-        // TODO add your handling code here:
-        char ch = evt.getKeyChar();
-        if (!(Character.isDigit(ch) || ch == KeyEvent.VK_BACKSPACE || ch == KeyEvent.VK_DELETE)) {
-            evt.consume();
-        }
-    }//GEN-LAST:event_serverPortFieldKeyTyped
 
     private void clientPortFieldKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_clientPortFieldKeyTyped
         // TODO add your handling code here:
@@ -547,6 +558,20 @@ public class Screen extends javax.swing.JFrame {
                 JOptionPane.INFORMATION_MESSAGE);
     }//GEN-LAST:event_chatProcessMenuItemMousePressed
 
+    private void serverPortFieldKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_serverPortFieldKeyTyped
+        // TODO add your handling code here:
+        char ch = evt.getKeyChar();
+        if (!(Character.isDigit(ch) || ch == KeyEvent.VK_BACKSPACE || ch == KeyEvent.VK_DELETE)) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_serverPortFieldKeyTyped
+
+    private void serverPortFieldKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_serverPortFieldKeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            accountLogin();
+        }
+    }//GEN-LAST:event_serverPortFieldKeyPressed
+
     private void changePanel(JPanel outerPanel, JPanel innerPanel) {
         outerPanel.removeAll();
         outerPanel.repaint();
@@ -577,6 +602,9 @@ public class Screen extends javax.swing.JFrame {
     private javax.swing.JMenu helpMenu;
     private javax.swing.JLabel ipAdressLabel;
     private javax.swing.JPanel mainPanel;
+    private javax.swing.JPanel messageContainerPanel;
+    private javax.swing.JPanel messagePanel;
+    private javax.swing.JPanel messageViewPanel;
     private javax.swing.JMenu messengerMenu;
     private javax.swing.JMenuBar messengerMenuBar;
     private javax.swing.JMenuItem myIPMenuItem;
