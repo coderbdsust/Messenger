@@ -125,7 +125,7 @@ public class Screen extends javax.swing.JFrame {
         }
 
         if (MESSENGERSTATE.equals("CLIENT")) {
-
+            
             if (StringUtils.isValid(username, portId, host)) {
                 System.out.println("MESSENGER STATE: " + MESSENGERSTATE);
                 changePanel(mainPanel, chatPanel);
@@ -482,12 +482,14 @@ public class Screen extends javax.swing.JFrame {
             resetField();
             changePanel(choicePanel, serverInfoPanel);
             createButton.setText("CREATE");
+            createButton.setEnabled(true);
         }
 
         if (comboBox.getSelectedItem().toString().equals("CLIENT")) {
             resetField();
             changePanel(choicePanel, clientInfoPanel);
             createButton.setText("CONNECT");
+            createButton.setEnabled(true);
         }
     }//GEN-LAST:event_comboBoxActionPerformed
 
