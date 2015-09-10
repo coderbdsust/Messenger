@@ -5,6 +5,8 @@
  */
 package coderbd.messenger.server;
 
+import coderbd.messenger.utils.Filter;
+import coderbd.messenger.utils.Simulator;
 import coderbd.messenger.gui.ChatBox;
 import java.io.DataInputStream;
 import java.io.EOFException;
@@ -38,15 +40,22 @@ public class ServerThread extends Thread {
             String message = dataInput.readUTF();
             ChatBox.addMessage(message);
             server.sendToAll(message, socket);
-            
-            
+
             while (true) {
                 /**
                  * Get the message from client side
                  */
+
                 message = dataInput.readUTF();
 //                showMessage(message);
-                ChatBox.addMessage(message);
+                String tempMessage = Filter.dataFilter(message);
+
+                if (Filter.isFileData(message)) {
+                    ChatBox.addMessage("FILE SEND");
+                } else {
+                    ChatBox.addMessage(tempMessage);
+                }
+
                 /**
                  * Send to message to all other client via server
                  */

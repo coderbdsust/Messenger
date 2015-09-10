@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package coderbd.messenger.server;
 
 import coderbd.messenger.gui.ChatBox;
@@ -23,20 +22,18 @@ import javax.swing.JTextField;
  *
  * @author Biswajit
  */
-
-
 public class Server {
 
     private ServerSocket serverSocket;
-    public String username=null;
+    public String username = null;
     public JTextField chatField = new JTextField();
     final private ArrayList<SocketStream> socketList;
 
     public Server(int port, String username, JTextField chatField) throws IOException {
         this.socketList = new ArrayList<SocketStream>();
-        this.username=username;
-        this.chatField=chatField;
-        
+        this.username = username;
+        this.chatField = chatField;
+
         chatField.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent event) {
@@ -46,21 +43,30 @@ public class Server {
                 ChatBox.setEmptyField();
             }
         });
-        
+
         listen(port);
     }
-    
-    private String getUsername(){
+
+    private String getUsername() {
         return this.username;
     }
 
     @SuppressWarnings("empty-statement")
     private void listen(int port) throws IOException {
-
+        int open = 0;
         serverSocket = new ServerSocket(port);
         while (true) {
             try {
                 Socket socket = serverSocket.accept();
+
+                /**
+                 * Increase the buffer size
+                 */
+                System.out.println("R B:" + socket.getReceiveBufferSize());
+                System.out.println("S B:" + socket.getSendBufferSize());
+
+
+                System.out.println("Socket Open :" + ++open);
                 DataInputStream dataInput = new DataInputStream(socket.getInputStream());
                 DataOutputStream dataOutput = new DataOutputStream(socket.getOutputStream());
                 ChatBox.chatPermission(true);
@@ -78,17 +84,18 @@ public class Server {
             sendMessage(socketStream, message);
         }
     }
-    
+
     public void sendToAll(String message, Socket socket) {
         for (SocketStream socketStream : socketList) {
-            if(socketStream.socket!=socket)
+            if (socketStream.socket != socket) {
                 sendMessage(socketStream, message);
+            }
         }
     }
 
     public void removeConnection(Socket socket) {
-        for(SocketStream socketStream: socketList){
-            if(socketStream.socket.equals(socket)){
+        for (SocketStream socketStream : socketList) {
+            if (socketStream.socket.equals(socket)) {
                 socketList.remove(socketStream);
                 break;
             }
@@ -103,6 +110,5 @@ public class Server {
             System.out.println("Send message 1 : " + ex);
         }
     }
-
 
 }

@@ -5,31 +5,20 @@
  */
 package coderbd.messenger.gui;
 
-import coderbd.messenger.StringSimulator.StringUtils;
-import coderbd.messenger.client.Client;
+import coderbd.messenger.utils.StringUtils;
+import coderbd.messenger.client.ClientHandler;
 import coderbd.messenger.server.Server;
 import com.sun.glass.events.KeyEvent;
-import java.awt.Component;
-import java.awt.PopupMenu;
-import java.io.BufferedReader;
+
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
-import java.io.EOFException;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.io.PrintWriter;
 import java.net.InetAddress;
-import java.net.ServerSocket;
-import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.SwingUtilities;
 
 /**
  *
@@ -47,8 +36,6 @@ public class Screen extends javax.swing.JFrame {
     private Server Server;
     Thread serverThread;
     Thread clientThread;
-   
-    
 
     /**
      * Creates new form Screen
@@ -125,14 +112,15 @@ public class Screen extends javax.swing.JFrame {
         }
 
         if (MESSENGERSTATE.equals("CLIENT")) {
-            
+
             if (StringUtils.isValid(username, portId, host)) {
                 System.out.println("MESSENGER STATE: " + MESSENGERSTATE);
                 changePanel(mainPanel, chatPanel);
                 clientThread = new Thread() {
                     public void run() {
 
-                        new Client(host, portId, username + " :: ", chatField);
+//                        new Client(host, portId, username + " :: ", chatField, attachFileLabel);
+                        new ClientHandler(host, portId, username + " :: ", chatField, attachFileLabel);
                     }
                 };
                 clientThread.start();;
@@ -177,6 +165,7 @@ public class Screen extends javax.swing.JFrame {
         messagePanel = new javax.swing.JPanel();
         chatTextLabel = new javax.swing.JLabel();
         chatField = new javax.swing.JTextField();
+        attachFileLabel = new javax.swing.JLabel();
         messageViewPanel = new javax.swing.JPanel();
         chatViewScrollPane = new javax.swing.JScrollPane();
         chatBox = new javax.swing.JTextArea();
@@ -190,7 +179,6 @@ public class Screen extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMaximumSize(new java.awt.Dimension(400, 600));
-        setPreferredSize(new java.awt.Dimension(400, 550));
 
         mainPanel.setBackground(new java.awt.Color(255, 102, 102));
         mainPanel.setMaximumSize(new java.awt.Dimension(388, 600));
@@ -360,7 +348,7 @@ public class Screen extends javax.swing.JFrame {
                 .addComponent(choicePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(createButton)
-                .addContainerGap(22, Short.MAX_VALUE))
+                .addContainerGap(72, Short.MAX_VALUE))
         );
 
         mainPanel.add(accountInfoPanel, "card2");
@@ -377,6 +365,21 @@ public class Screen extends javax.swing.JFrame {
         chatTextLabel.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         chatTextLabel.setText("Message");
 
+        chatField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                chatFieldActionPerformed(evt);
+            }
+        });
+
+        attachFileLabel.setBackground(new java.awt.Color(221, 212, 212));
+        attachFileLabel.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        attachFileLabel.setText("<html><u>Attach File</u></html> ");
+        attachFileLabel.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                attachFileLabelMouseClicked(evt);
+            }
+        });
+
         javax.swing.GroupLayout messagePanelLayout = new javax.swing.GroupLayout(messagePanel);
         messagePanel.setLayout(messagePanelLayout);
         messagePanelLayout.setHorizontalGroup(
@@ -387,7 +390,10 @@ public class Screen extends javax.swing.JFrame {
                     .addGroup(messagePanelLayout.createSequentialGroup()
                         .addComponent(chatTextLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 280, Short.MAX_VALUE))
-                    .addComponent(chatField))
+                    .addComponent(chatField)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, messagePanelLayout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(attachFileLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         messagePanelLayout.setVerticalGroup(
@@ -397,7 +403,9 @@ public class Screen extends javax.swing.JFrame {
                 .addComponent(chatTextLabel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(chatField, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(39, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(attachFileLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(19, Short.MAX_VALUE))
         );
 
         messageContainerPanel.add(messagePanel, java.awt.BorderLayout.PAGE_END);
@@ -470,7 +478,7 @@ public class Screen extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(mainPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 600, Short.MAX_VALUE)
+            .addComponent(mainPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 529, Short.MAX_VALUE)
         );
 
         pack();
@@ -542,7 +550,7 @@ public class Screen extends javax.swing.JFrame {
 
     private void aboutMenuItemMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_aboutMenuItemMousePressed
         // TODO add your handling code here:
-     
+
         JOptionPane.showMessageDialog(null, "Name: Biswajit Debnath\nEmail: biswajit.sust@gmail.com", "Developer Info", JOptionPane.INFORMATION_MESSAGE);
     }//GEN-LAST:event_aboutMenuItemMousePressed
 
@@ -555,7 +563,7 @@ public class Screen extends javax.swing.JFrame {
                 + "- You can see your IP address from the MyIP menu.\n"
                 + "- In Client mode you have to provide the Server Ip and Server Port Id.\n"
                 + "- Use the input text field to enter your chat message.\n",
-//                + "- Save your chat using the save chat option from the file menu.\n"
+                //                + "- Save your chat using the save chat option from the file menu.\n"
                 "Messenger Use",
                 JOptionPane.INFORMATION_MESSAGE);
     }//GEN-LAST:event_chatProcessMenuItemMousePressed
@@ -574,6 +582,14 @@ public class Screen extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_serverPortFieldKeyPressed
 
+    private void chatFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chatFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_chatFieldActionPerformed
+
+    private void attachFileLabelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_attachFileLabelMouseClicked
+        // TODO add your handling code here: 
+    }//GEN-LAST:event_attachFileLabelMouseClicked
+
     private void changePanel(JPanel outerPanel, JPanel innerPanel) {
         outerPanel.removeAll();
         outerPanel.repaint();
@@ -587,6 +603,7 @@ public class Screen extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem aboutMenuItem;
     private javax.swing.JPanel accountInfoPanel;
+    private javax.swing.JLabel attachFileLabel;
     public javax.swing.JTextArea chatBox;
     public javax.swing.JTextField chatField;
     private javax.swing.JPanel chatPanel;
