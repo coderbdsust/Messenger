@@ -123,6 +123,7 @@ public class ClientHandler extends Thread implements Serializable {
         String fileData = FileConverterFactory.getInstance().convertBytesToString(fileBytes);
         String packetData = Simulator.FILE + Simulator.SEPERATOR + file.getName() + Simulator.SEPERATOR + fileData;
         sendMessage(packetData);
+        ChatBox.addMessage("FILE SEND");
     }
 
     private void receiveFile(String message) {
@@ -130,6 +131,7 @@ public class ClientHandler extends Thread implements Serializable {
         String fileData = Filter.dataFilter(message);
         byte[] fileBytes = FileConverterFactory.getInstance().convertStringToBytes(fileData);
         FileConverterFactory.getInstance().convertBytesToFile(fileName, fileBytes);
+        ChatBox.addMessage("FILE RECEIVED");
     }
 
     /**

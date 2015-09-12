@@ -107,7 +107,7 @@ public class Server {
             socketStream.dataOutput.writeUTF(message);
             socketStream.dataOutput.flush();
         } catch (IOException ex) {
-            System.out.println("Send message 1 : " + ex);
+            System.out.println("SEND MESSAGE  : " + ex);
         }
     }
 

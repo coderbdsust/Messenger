@@ -51,7 +51,7 @@ public class ServerThread extends Thread {
                 String tempMessage = Filter.dataFilter(message);
 
                 if (Filter.isFileData(message)) {
-                    ChatBox.addMessage("FILE SEND");
+                    ChatBox.addMessage("FILE DATA FORWARDED");
                 } else {
                     ChatBox.addMessage(tempMessage);
                 }
@@ -66,7 +66,9 @@ public class ServerThread extends Thread {
         } catch (IOException ex) {
             System.out.println("CLIENT DISCONNECTED : " + ex);
         } finally {
+            
             server.removeConnection(socket);
+            
         }
     }
 }

@@ -19,13 +19,11 @@ public class Filter {
         String data = "";
 
         if (splits[0].equals(Simulator.FILE)) {
-            for (int i = 2; i < splits.length; i++) {
-                data += splits[i];
-            }
+            String header = Simulator.FILE + Simulator.SEPERATOR + splits[1] + Simulator.SEPERATOR;
+            data = message.substring(header.length());
         } else {
-            for (int i = 1; i < splits.length; i++) {
-                data += splits[i];
-            }
+            String header = Simulator.TEXT + Simulator.SEPERATOR;
+            data = message.substring(header.length());
         }
         return data;
     }
@@ -33,7 +31,7 @@ public class Filter {
     public static String getFileName(String message) {
         String[] splitData = message.split(Simulator.SEPERATOR);
         if (splitData.length < 1) {
-            return new SimpleDateFormat("ddMMyyyy-hhmmssSS").format(new Date()).toString() + "."+Simulator.FILE_TYPE;
+            return new SimpleDateFormat("ddMMyyyy-hhmmssSS").format(new Date()).toString() + "." + Simulator.FILE_TYPE;
         }
         return splitData[1];
     }
