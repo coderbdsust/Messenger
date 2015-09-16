@@ -33,7 +33,6 @@ import javax.swing.JTextField;
 import javax.swing.filechooser.FileFilter;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
-
 /**
  *
  * @author Biswajit Debnath
@@ -69,8 +68,6 @@ public class ClientHandler extends Thread implements Serializable {
             @Override
             public void mouseClicked(MouseEvent me) {
                 JFileChooser fileopen = new JFileChooser();
-                FileFilter filter = new FileNameExtensionFilter("File Types", Simulator.FILE_TYPE);
-                fileopen.addChoosableFileFilter(filter);
 
                 int ret = fileopen.showDialog(null, "Select file");
 
