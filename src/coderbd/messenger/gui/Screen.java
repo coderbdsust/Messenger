@@ -9,27 +9,15 @@ import coderbd.messenger.StringSimulator.StringUtils;
 import coderbd.messenger.client.Client;
 import coderbd.messenger.server.Server;
 import com.sun.glass.events.KeyEvent;
-import java.awt.Component;
-import java.awt.PopupMenu;
-import java.io.BufferedReader;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
-import java.io.EOFException;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.io.PrintWriter;
 import java.net.InetAddress;
-import java.net.ServerSocket;
-import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.SwingUtilities;
 
 /**
  *
@@ -44,7 +32,7 @@ public class Screen extends javax.swing.JFrame {
     private String message = "";
     private DataInputStream dataInput;
     private DataOutputStream dataOutput;
-    private Server Server;
+    private Server server;
     Thread serverThread;
     Thread clientThread;
    
@@ -111,7 +99,7 @@ public class Screen extends javax.swing.JFrame {
                 serverThread = new Thread() {
                     public void run() {
                         try {
-                            new Server(portId, username + " [ADMIN] :: ", chatField);
+                            server = new Server(portId, username + " [ADMIN] :: ", chatField);
                         } catch (IOException ex) {
                             Logger.getLogger(Screen.class.getName()).log(Level.SEVERE, null, ex);
                         }
@@ -339,17 +327,17 @@ public class Screen extends javax.swing.JFrame {
         accountInfoPanelLayout.setHorizontalGroup(
             accountInfoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(accountInfoPanelLayout.createSequentialGroup()
-                .addGap(152, 152, 152)
-                .addComponent(comboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(149, Short.MAX_VALUE))
-            .addGroup(accountInfoPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(accountInfoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(choicePanel, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addComponent(choicePanel, javax.swing.GroupLayout.DEFAULT_SIZE, 388, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, accountInfoPanelLayout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(createButton, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
+            .addGroup(accountInfoPanelLayout.createSequentialGroup()
+                .addGap(129, 129, 129)
+                .addComponent(comboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         accountInfoPanelLayout.setVerticalGroup(
             accountInfoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -360,7 +348,7 @@ public class Screen extends javax.swing.JFrame {
                 .addComponent(choicePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(createButton)
-                .addContainerGap(22, Short.MAX_VALUE))
+                .addContainerGap(107, Short.MAX_VALUE))
         );
 
         mainPanel.add(accountInfoPanel, "card2");
